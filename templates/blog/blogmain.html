@@ -46,12 +46,35 @@
         </div>
         <!-- 메인 박스들 -->
         <div class="col-lg-9">
+            {% if post_list %}
+                {% for post in post_list %}
+                <tr class="text-center">
+                    <td>
+                        <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+                        {% comment %} {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }} {% endcomment %}
+                    </td>
+                    {% comment %} <td class="text-start">
+                        <a href="{% url 'blog:detail' post.id %}">{{ post.subject }}</a>
+                        {% if post.answer_set.count > 0 %}
+                        <span class="text-danger small mx-2">{{ post.answer_set.count }}</span>
+                        {% endif %}
+                    </td>  {% endcomment %}
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.author.username }}</td>  <!-- 글쓴이 추가 -->
+                    <td>{{ post.create_date }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="4">게시글이 없습니다.</td>
+            </tr>
+            {% endif %}
             <!-- Featured blog post-->
             <div class="card mb-4">
                 <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                 <div class="card-body">
                     <div class="small text-muted">January 1, 2023</div>
-                    <h2 class="card-title">여기 일단 홈페이지</h2>
+                    <h2 class="card-title">여기 일단 블로그 페이지</h2>
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
                     <a class="btn btn-primary" href="#!">Read more →</a>
                 </div>
