@@ -59,6 +59,11 @@
                         <span class="text-danger small mx-2">{{ post.answer_set.count }}</span>
                         {% endif %}
                     </td>  {% endcomment %}
+                    {% if post.image %}
+                    {% for i in post.image.all %}
+                    <img src='{{i.image.url}}'/>
+                    {% endfor %}
+                    {% endif %}
                     <td>{{ post.title }}</td>
                     <td>{{ post.author.username }}</td>  <!-- 글쓴이 추가 -->
                     <td>{{ post.create_date }}</td>
