@@ -66,4 +66,4 @@ def bloghome(request):
 def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     context = {'post': post}
-    return render(request, 'main/post_detail.html', context)
+    return render(request, 'blog/post_detail.html', context)

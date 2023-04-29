@@ -44,7 +44,7 @@ class PostImage(models.Model):
 
     def __int__(self):
         return self.id
-
+    # 이미지크기 가로 700픽셀
     class Meta:
         db_table = 'post_image'
 

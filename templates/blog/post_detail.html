@@ -1,4 +1,39 @@
 {% extends 'base.html' %}
-{% load blog_filter %}
+{% comment %} {% load blog_filter %} {% endcomment %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <!-- 왼쪽 박스들 -->
+        {% include  "leftbox.html" %}
+        <!-- 메인박스들 -->
+        <div class='col-lg-9'>
+            <!-- 제목 -->
+            <div class='card mb-4'>
+                <h2>{{ post.title }}</h2>
+                <h4 class='text-lg-end px-2 py-1'>작성자 : {{ post.author.username }}</h4>
+                <p class='text-lg-end px-2 py-1'>작성시간 : {{ post.create_date }}</p>
+            </div>
+            <!-- 내용 -->
+            <div class='card mb-4'>
+                <div class='card-body'>
+                    <div class='card-text'>
+                        {{ post.content }}
+                        <p>.</p>
+                        {% if post.image %}
+                        {% for i in post.image.all %}
+                        <img src='{{i.image.url}}'/>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- 댓글 -->
+            <div class='card mb-4'>
+                <div class='card-body'>
+                    <h4>여긴 댓글</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
