@@ -23,7 +23,7 @@ class Post(models.Model):
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
     click = models.IntegerField(null=True, default=0) # 클릭
-    category = models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL,related_name='blog_category')
 
     def __str__(self):
         return f'[{self.pk}]{self.title}'
@@ -31,11 +31,11 @@ class Post(models.Model):
     class Meta:
         db_table = 'post'
 
+#이미지 저장 루트
 def image_upload_path(instance, filename):
-    # title = instance.post.title
-    # slug = slugify(title)
-    # return "post_images/%s-%s" % (slug, filename)
-    return f'{instance.post.id}/{filename}'
+    id = instance.post.id
+    slug = slugify(id)
+    return "post_images/%s/%s" % (slug, filename)
 
 class PostImage(models.Model):
     id = models.AutoField(primary_key=True)
