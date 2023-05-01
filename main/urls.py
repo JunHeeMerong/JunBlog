@@ -22,5 +22,6 @@ from main import view
 urlpatterns = [
     path('',view.home),
     path('admin/', admin.site.urls),
-    path('blog/',include('blog.urls'))
+    path('blog/',include('blog.urls')),
+    path('common/',include('common.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
