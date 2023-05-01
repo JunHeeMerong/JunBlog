@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
-{% comment %} {% load static%} {% endcomment %}
+{% load blog_filter %}
 {% block content%}
 <!-- Page content-->
 <div class="container">
     <div class="row">
         <!-- 왼쪽 박스들 -->
         {% include  "leftbox.html" %}
-        <table class="col-lg-9">
-            <thead>
-                <tr class='text-center'>
+        <!-- 메인 테이블 -->
+        <table class="table">
+            <thead class='table-bordered'>
+                <tr class=' text-center'>
                     <th>번호</th>
                     <th sytle="width:50%">제목</th>
                     <th>글쓴이</th>
@@ -20,17 +21,17 @@
             {% if post_list %}
             {% for post in post_list %}
                 <tr class="text-center">
-                    {% comment %} <td>
+                    <td>
                         <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
                         {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
-                    </td> {% endcomment %}
+                    </td>
+                    <!-- 댓글수 -->
                     {% comment %} <td class="text-start">
-                        <a href="{% url 'blog:detail' post.id %}">{{ post.subject }}</a>
+                        <a href="{% url 'post:detail' post.id %}">{{ post.subject }}</a>
                         {% if post.answer_set.count > 0 %}
                         <span class="text-danger small mx-2">{{ post.answer_set.count }}</span>
                         {% endif %}
-                    </td>  {% endcomment %}
-                    <td>{{ post.id }}</td>
+                    </td>  {% endcomment %} 
                     <td class='text-start'>
                         <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
                     </td>
@@ -45,19 +46,43 @@
             {% endif %}
             </tbody>
         </table>
-        <!-- Pagination-->
-        <nav aria-label="Pagination">
-            <hr class="my-0" />
-            <ul class="pagination justify-content-center my-4">
-                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-            </ul>
-        </nav>
+        <!-- 페이징처리 -->
+        <ul class="pagination justify-content-center my-4">
+            <!-- 이전 페이지 -->
+            {% if post_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ post_list.previous_page_number }}">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in post_list.paginator.page_range %}
+            {% comment %} {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %} {% endcomment %}
+            {% if page_number == post_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+            {% comment %} {% endif %} {% endcomment %}
+            {% endfor %}
+            <!-- 다음페이지 -->
+            {% if post_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ post_list.next_page_number }}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 {% endblock %}
