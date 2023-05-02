@@ -99,3 +99,12 @@ def post_modify(request, post_id):
         formset = ImageFormSet(queryset=PostImage.objects.none()) # 이미지폼
     context = {'postform':postform,'formset':formset,'posts':posts}
     return render(request, 'blog/post_form.html', context)
+
+# 블로그 삭제
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, '삭제권한이 없습니다')
+        return redirect('Jun:detail', post_id=post.id)
+    post.delete()
+    return redirect('blog:bloghome')
