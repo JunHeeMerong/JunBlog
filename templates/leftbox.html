@@ -24,9 +24,11 @@
             </div>
         </div>
     </div>
+    {% if user.is_authenticated %}
     <div class='card mb-4'>
         <a href="{% url 'blog:post_create' %}" class="btn btn-primary">글쓰기</a>
     </div>
+    {% endif %}
     <!-- Categories widget-->
     <div class="card mb-4">
         <div class="card-header">Categories</div>

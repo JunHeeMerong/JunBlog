@@ -9,9 +9,14 @@
         <div class='col-lg-9'>
             <!-- 제목 -->
             <div class='card mb-4'>
-                <h2>{{ post.title }}</h2>
-                <h4 class='text-lg-end px-2 py-1'>작성자 : {{ post.author.username }}</h4>
-                <p class='text-lg-end px-2 py-1'>작성시간 : {{ post.create_date }}</p>
+                <h2 class='my-2 mx-2'>{{ post.title }}</h2>
+                <h4 class='text-lg-end mx-2 my-1'>작성자 : {{ post.author.username }}</h4>
+                <p class='text-lg-end mx-2 my-1'>작성시간 : {{ post.create_date }}</p>
+                {% if request.user == post.author %}
+                <div>
+                <a href="{% url 'blog:post_modify' post.id %}" class='btn btn-sm btn-outline-secondary w-25 mx-2 my-1 float-end'>수정하기</a>
+                </div>
+                {% endif %}
             </div>
             <!-- 내용 -->
             <div class='card mb-4'>
