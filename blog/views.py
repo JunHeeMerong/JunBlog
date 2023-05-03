@@ -35,7 +35,7 @@ def bloghome(request):
     post_list = Post.objects.order_by('-create_date')
     if kw:
         post_list = post_list.filter(
-            Q(subject__icontains=kw) |  # 제목 검색
+            Q(title__icontains=kw) |  # 제목 검색
             Q(content__icontains=kw) |  # 내용 검색
             Q(comment__content__icontains=kw) |  # 답변 내용 검색
             Q(author__username__icontains=kw) |  # 질문 글쓴이 검색

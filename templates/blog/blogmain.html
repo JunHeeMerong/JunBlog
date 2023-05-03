@@ -25,13 +25,6 @@
                         <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
                         {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
                     </td>
-                    <!-- 댓글수 -->
-                    {% comment %} <td class="text-start">
-                        <a href="{% url 'post:detail' post.id %}">{{ post.subject }}</a>
-                        {% if post.answer_set.count > 0 %}
-                        <span class="text-danger small mx-2">{{ post.answer_set.count }}</span>
-                        {% endif %}
-                    </td>  {% endcomment %} 
                     <td class='text-start'>
                         <a href="{% url 'blog:detail' post.id %}">{{ post.title }} </a>
                         {% if post.comment_set.count > 0 %}
@@ -93,9 +86,21 @@
     </div>
 </div>
 {% endblock %}
-{% comment %} {% block script %} {% endcomment %}
-<!-- Bootstrap core JS-->
-{% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
-<!-- Core theme JS-->
-{% comment %} <script src="js/scripts.js"></script> {% endcomment %}
-{% comment %} {% endblock%} {% endcomment %}
+
+{% block script %}
+<script type='text/javascript'>
+const page_elements = document.getElementsByClassName("page-link");
+Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.getElementById('page').value = this.dataset.page;
+        document.getElementById('searchForm').submit();
+    });
+});
+const btn_search = document.getElementById("button_search");
+btn_search.addEventListener('click', function() {
+    document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+});
+</script>
+{% endblock %}
