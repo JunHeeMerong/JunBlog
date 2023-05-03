@@ -5,7 +5,7 @@ class InlinePostImage(admin.TabularInline):
     model = PostImage
 
 class PostAdmin(admin.ModelAdmin):
-    search_fields = ['subject']
+    search_fields = ['title']
     inlines = [InlinePostImage]
     def save_model(self, request, obj, form, change):
     	# super().save_model(request, obj, form, change)

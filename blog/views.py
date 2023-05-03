@@ -8,22 +8,23 @@ from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+from freeboard.models import *
 from .models import *
 from .forms import PostForm,ImageForm,CommentForm
 
 # 유저의 게시글수 확인
 def countpost(request):
     if request.user in User.objects.all(): # 유저가 로그인하면
-        return Post.objects.filter(author_id=request.user).count() # 유저의 아이디=포스트 작성자 아이디 인 포스트들의 갯수를 세서 posts에 담아서 render
-    else:
-        return Post.objects
+        postcount = Post.objects.filter(author_id=request.user).count()
+        freepostcount = FreePost.objects.filter(author_id=request.user).count()
+        return postcount+freepostcount # 유저의 아이디=포스트 작성자 아이디 인 포스트들의 갯수를 세서 posts에 담아서 render
 
 # 유저의 댓글수 확인
 def countcomment(request):
     if request.user in User.objects.all():
-        return Comment.objects.filter(author_id=request.user).count()
-    else:
-        return Comment.objects
+        commentcount = Comment.objects.filter(author_id=request.user).count()
+        freecommentcount = FreeComment.objects.filter(author_id=request.user).count()
+        return commentcount+freecommentcount
     
 # 블로그홈
 def bloghome(request):

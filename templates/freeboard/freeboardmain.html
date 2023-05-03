@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% load blog_filter %}
+{% load free_filter %}
 {% block content%}
 <!-- Page content-->
 <div class="container">
     <div class="row">
         <!-- 왼쪽 박스들 -->
-        {% include  "blogleftbox.html" %}
+        {% include  "freeleftbox.html" %}
         <!-- 메인 테이블 -->
         <div class='col-lg-9'>
             <table class="table table-striped">
@@ -27,9 +27,9 @@
                             {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
                         </td>
                         <td class='text-start'>
-                            <a href="{% url 'blog:detail' post.id %}">{{ post.title }} </a>
-                            {% if post.comment_set.count > 0 %}
-                            <span class="text-danger small mx-2">{{ post.comment_set.count }}</span>
+                            <a href="{% url 'freeboard:free_detail' post.id %}">{{ post.title }} </a>
+                            {% if post.freecomment_set.count > 0 %}
+                            <span class="text-danger small mx-2">{{ post.freecomment_set.count }}</span>
                             {% endif %}
                         </td>
                         <td>{{ post.author.username }}</td>  <!-- 글쓴이 추가 -->
