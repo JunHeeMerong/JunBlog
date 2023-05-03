@@ -28,9 +28,9 @@ class ImageForm(forms.ModelForm):
             'image': _('이미지'),
         }
 
-class AnswerForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
-        model = Answer
+        model = Comment
         fields = ['content']
         labels = {
             'content':_('댓글내용'),

@@ -55,7 +55,7 @@ class PostImageSerializer(serializers.ModelSerializer):
         model = PostImage
         fields = ['image']
 
-class Answer(models.Model):
+class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_answer')
     content = models.TextField()
