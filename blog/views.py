@@ -4,7 +4,6 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.forms import modelformset_factory
 from django.utils import timezone
-from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -15,16 +14,16 @@ from .forms import PostForm,ImageForm,CommentForm
 # 유저의 게시글수 확인
 def countpost(request):
     if request.user in User.objects.all(): # 유저가 로그인하면
-        postcount = Post.objects.filter(author_id=request.user).count()
-        freepostcount = FreePost.objects.filter(author_id=request.user).count()
-        return postcount+freepostcount # 유저의 아이디=포스트 작성자 아이디 인 포스트들의 갯수를 세서 posts에 담아서 render
+        postcount = Post.objects.filter(author_id=request.user).count() # Post모델에서 유저아이디랑 접속아이디가 같은 것들 갯수세기
+        freepostcount = FreePost.objects.filter(author_id=request.user).count() # FreePost모델에서 유저아이디랑 접속아이디가 같은 것들 갯수세기
+        return postcount+freepostcount # 블로그 작성글과 자유게시판 작성글 갯수의 합 계산
 
 # 유저의 댓글수 확인
 def countcomment(request):
     if request.user in User.objects.all():
-        commentcount = Comment.objects.filter(author_id=request.user).count()
-        freecommentcount = FreeComment.objects.filter(author_id=request.user).count()
-        return commentcount+freecommentcount
+        commentcount = Comment.objects.filter(author_id=request.user).count() # Comment모델에서 유저아이디랑 접속아이디가 같은 것들 갯수세기
+        freecommentcount = FreeComment.objects.filter(author_id=request.user).count() # FreeComment모델에서 유저아이디랑 접속아이디가 같은 것들 갯수세기
+        return commentcount+freecommentcount # 블로그 작성댓글과 자유게시판 작성댓글 갯수의 합 계산
     
 # 블로그홈
 def bloghome(request):
