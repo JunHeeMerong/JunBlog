@@ -26,3 +26,5 @@ urlpatterns = [
     path('common/',include('common.urls')),
     path('freeboard/',include('freeboard.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'common.views.page_not_found'
