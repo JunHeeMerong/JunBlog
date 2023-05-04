@@ -2,6 +2,8 @@ from django.shortcuts import render
 from blog.models import Post,Comment
 from freeboard.models import *
 from django.contrib.auth.models import User
+import logging
+logger = logging.getLogger('junblog')
 
 # 유저의 게시글수 확인
 def countpost(request):
@@ -20,6 +22,7 @@ def countcomment(request):
 # Create your views here. -----------------------------------------------------------------------
 def home(request):
     # 유저의 포스트개수 세기
+    logger.info("INFO 레벨로 출력")
     posts = countpost(request)
     comments = countcomment(request)
     context = {'posts':posts,'comments':comments}

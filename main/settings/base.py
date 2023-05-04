@@ -199,5 +199,9 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'junblog': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
     }
 }
