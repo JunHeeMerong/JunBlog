@@ -24,6 +24,9 @@ sudo systemctl stop blog.service
 구니콘 다시 시작
 sudo systemctl restart blog.service
 
+nginx 다시 시작
+sudo systemctl restart nginx
+
 #########sudo 명령어들 ################
 1. sudo rm 파일명 => 삭제
 2. sudo vi 파일명 => 생성/이미있으면 수정
