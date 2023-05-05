@@ -22,7 +22,7 @@ class FreePost(models.Model):
 
 #이미지 저장 루트
 def image_upload_path(instance, filename):
-    id = instance.post.id
+    id = instance.freepost.id
     slug = slugify(id)
     return "free_post_images/%s/%s" % (slug, filename)
 

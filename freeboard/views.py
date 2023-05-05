@@ -61,11 +61,11 @@ def free_post_create(request):
     posts = countpost(request)
     comments = countcomment(request)
     #하나의 모델폼을 여러번 쓸수 있음. 모델,모델폼,몇개의 폼을 띄울건지 갯수
-    ImageFormSet = modelformset_factory(FreePostImage,form=FreeImageForm,extra=10)
+    FreeImageFormSet = modelformset_factory(FreePostImage,form=FreeImageForm,extra=10)
     if request.method=='POST':
         freepostform = FreePostForm(request.POST)
         # queryset을 none으로 정의해서 이미지가 없어도 되도록 설정. none은 빈 쿼리셋 리턴
-        freeformset = ImageFormSet(request.POST, request.FILES, queryset=FreePostImage.objects.none())
+        freeformset = FreeImageFormSet(request.POST, request.FILES, queryset=FreePostImage.objects.none())
         if freepostform.is_valid() and freeformset.is_valid():
             freepost_form = freepostform.save(commit=False) # 임시저장
             freepost_form.author = request.user
@@ -73,15 +73,15 @@ def free_post_create(request):
             freepost_form.save()
             for form in freeformset.cleaned_data:
                 if form:
-                    image = form['image']
-                    photo = FreePostImage(freepost=freepost_form,freeimage=image)
+                    freeimage = form['freeimage']
+                    photo = FreePostImage(freepost=freepost_form,freeimage=freeimage)
                     photo.save()
             return redirect('freeboard:freeboardhome')
         else:
             print(freepostform.errors,freeformset.errors)
     else:
         freepostform = FreePostForm()
-        freeformset = ImageFormSet(queryset=FreePostImage.objects.none()) # 이미지폼
+        freeformset = FreeImageFormSet(queryset=FreePostImage.objects.none()) # 이미지폼
     context = {'postform':freepostform,'formset':freeformset,'posts':posts,'comments':comments}
     return render(request,'freeboard/freeboard_form.html',context)
 
@@ -90,26 +90,26 @@ def free_post_modify(request, freepost_id):
     freepost = get_object_or_404(FreePost, pk=freepost_id)
     posts = countpost(request)
     comments = countcomment(request)
-    ImageFormSet = modelformset_factory(FreePostImage,form=FreeImageForm,extra=10)
+    FreeImageFormSet = modelformset_factory(FreePostImage,form=FreeImageForm,extra=10)
     if request.user != freepost.author:
         messages.error(request, '수정권한이 없습니다')
         return redirect('freeboard:free_detail', freepost_id=freepost.id)
     if request.method == "POST":
         freepostform = FreePostForm(request.POST, instance=freepost)
-        formset = ImageFormSet(request.POST, request.FILES, queryset=FreePostImage.objects.none())
+        formset = FreeImageFormSet(request.POST, request.FILES, queryset=FreePostImage.objects.none())
         if freepostform.is_valid():
             freepost_form = freepostform.save(commit=False)
             freepost_form.modify_date = timezone.now()  # 수정일시 저장
             freepost_form.save()
             for form in formset.cleaned_data:
                 if form:
-                    image = form['image']
-                    photo = FreePostImage(freepost=freepost_form,image=image)
+                    freeimage = form['freeimage']
+                    photo = FreePostImage(freepost=freepost_form,freeimage=freeimage)
                     photo.save()
             return redirect('freeboard:free_detail',freepost_id=freepost.id)
     else:
         freepostform = FreePostForm(instance=freepost)
-        formset = ImageFormSet(queryset=FreePostImage.objects.none()) # 이미지폼
+        formset = FreeImageFormSet(queryset=FreePostImage.objects.none()) # 이미지폼
     context = {'postform':freepostform,'formset':formset,'posts':posts,'comments':comments}
     return render(request, 'freeboard/freeboard_form.html', context)
 
