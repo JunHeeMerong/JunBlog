@@ -14,6 +14,9 @@ git pull
 4. 서버실행
 python manage.py runserver 0:8000
 
+4-1. install 오류
+pip install -r requirements.txt
+
 ##################################################
 구니콘 서비스 종료
 sudo systemctl stop blog.service

@@ -32,15 +32,19 @@ def bloghome(request):
     comments = countcomment(request)
     page = request.GET.get('page', '1') # 페이지
     kw = request.GET.get('kw', '')  # 검색어
+    cg = request.GET.get('cg','') # 카테고리
     post_list = Post.objects.order_by('-create_date')
-    if kw:
+    if kw: # 검색기능 필터
         post_list = post_list.filter(
             Q(title__icontains=kw) |  # 제목 검색
             Q(content__icontains=kw) |  # 내용 검색
             Q(comment__content__icontains=kw) |  # 답변 내용 검색
             Q(author__username__icontains=kw) |  # 질문 글쓴이 검색
-            Q(comment__author__username__icontains=kw)  # 답변 글쓴이 검색
+            Q(comment__author__username__icontains=kw) |  # 답변 글쓴이 검색
+            Q(category__name__icontains=kw) # 카테고리로도 검색
         ).distinct()
+    if cg: # 카테고리 필터
+        post_list = post_list.filter(Q(category__name__icontains=cg))
     paginator = Paginator(post_list, 5)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
     context = {'post_list': page_obj, 'page': page, 'kw': kw, 'posts':posts,'comments':comments}
