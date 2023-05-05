@@ -736,3 +736,9 @@ Traceback (most recent call last):
     return super().execute(query, params)
 django.db.utils.OperationalError: no such table: auth_user
 2023-05-05 22:49:17,639 [INFO] junblog: INFO 레벨로 출력
+2023-05-05 22:54:31,550 [INFO] junblog: INFO 레벨로 출력
+2023-05-05 22:54:51,378 [INFO] junblog: INFO 레벨로 출력
+2023-05-05 22:55:14,700 [INFO] junblog: INFO 레벨로 출력
+2023-05-05 22:55:16,967 [INFO] junblog: INFO 레벨로 출력
+2023-05-05 22:55:26,739 [INFO] junblog: INFO 레벨로 출력
+2023-05-05 22:55:29,016 [INFO] junblog: INFO 레벨로 출력
