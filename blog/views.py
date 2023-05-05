@@ -34,6 +34,9 @@ def bloghome(request):
     kw = request.GET.get('kw', '')  # 검색어
     cg = request.GET.get('cg','') # 카테고리
     post_list = Post.objects.order_by('-create_date')
+    countcategory = []
+    for i in range(1,Category.objects.count()+1):
+        countcategory.append(post_list.filter(category_id=i).count())
     if kw: # 검색기능 필터
         post_list = post_list.filter(
             Q(title__icontains=kw) |  # 제목 검색
@@ -47,7 +50,7 @@ def bloghome(request):
         post_list = post_list.filter(Q(category__name__icontains=cg))
     paginator = Paginator(post_list, 5)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    context = {'post_list': page_obj, 'page': page, 'kw': kw, 'posts':posts,'comments':comments}
+    context = {'post_list': page_obj, 'page': page, 'kw': kw, 'posts':posts,'comments':comments,'countcategory':countcategory}
     return render(request, 'blog/blogmain.html', context)
 
 # 블로그 상세페이지
@@ -55,7 +58,11 @@ def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     comments = countcomment(request)
     posts = countpost(request)
-    context = {'post': post,'posts':posts,'comments':comments}
+    post_list = Post.objects.order_by('-create_date')
+    countcategory = []
+    for i in range(1,Category.objects.count()+1):
+        countcategory.append(post_list.filter(category_id=i).count())
+    context = {'post': post,'posts':posts,'comments':comments,'countcategory':countcategory}
     return render(request, 'blog/post_detail.html', context)
 
 # 블로그 글쓰기
@@ -84,7 +91,11 @@ def post_create(request):
     else:
         postform = PostForm()
         formset = ImageFormSet(queryset=PostImage.objects.none()) # 이미지폼
-    context = {'postform':postform,'formset':formset,'posts':posts,'comments':comments}
+    post_list = Post.objects.order_by('-create_date')
+    countcategory = []
+    for i in range(1,Category.objects.count()+1):
+        countcategory.append(post_list.filter(category_id=i).count())
+    context = {'postform':postform,'formset':formset,'posts':posts,'comments':comments,'countcategory':countcategory}
     return render(request,'blog/post_form.html',context)
 
 # 블로그 수정
@@ -112,7 +123,11 @@ def post_modify(request, post_id):
     else:
         postform = PostForm(instance=post)
         formset = ImageFormSet(queryset=PostImage.objects.none()) # 이미지폼
-    context = {'postform':postform,'formset':formset,'posts':posts,'comments':comments}
+    post_list = Post.objects.order_by('-create_date')
+    countcategory = []
+    for i in range(1,Category.objects.count()+1):
+        countcategory.append(post_list.filter(category_id=i).count())
+    context = {'postform':postform,'formset':formset,'posts':posts,'comments':comments,'countcategory':countcategory}
     return render(request, 'blog/post_form.html', context)
 
 # 블로그 삭제
