@@ -50,7 +50,8 @@ def bloghome(request):
         post_list = post_list.filter(Q(category__name__icontains=cg))
     paginator = Paginator(post_list, 5)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    context = {'post_list': page_obj, 'page': page, 'kw': kw, 'posts':posts,'comments':comments,'countcategory':countcategory}
+    category = Category.objects.all()
+    context = {'post_list': page_obj, 'page': page, 'kw': kw, 'posts':posts,'comments':comments,'countcategory':countcategory,'category':category}
     return render(request, 'blog/blogmain.html', context)
 
 # 블로그 상세페이지

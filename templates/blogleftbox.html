@@ -1,3 +1,4 @@
+{% load blog_filter %}
 <!-- 왼쪽 박스들 -->
 <div class="col-lg-3">
     <!-- 회원정보 -->
@@ -40,24 +41,14 @@
             <div>
                 <div class="col-sm-6">
                     <ul class="list-unstyled mb-0">
+                        {% for cg in category %}
                         <li>
-                            <input class="form-control" type="hidden" id="search_cg1" value="Python" />
+                            <input class="form-control" type="hidden" id="search_cg{{ forloop.counter }}" value="{{ cg.name }}" />
                             <div class="input-group-append">
-                                <button class="btn btn-link" id="button-cg1" type="button">Python ({{ countcategory.0 }})</button>
+                                <button class="btn btn-link" id="button-cg{{ forloop.counter }}" type="button">{{ cg.name }} ({{ countcategory|getvalue:forloop.counter0 }})</button>
                             </div>
                         </li>
-                        <li>
-                            <input class="form-control" type="hidden" id="search_cg2" value="MySQL" />
-                            <div class="input-group-append">
-                                <button class="btn btn-link" id="button-cg2" type="button">MySQL ({{ countcategory.1 }})</button>
-                            </div>
-                        </li>
-                        <li>
-                            <input class="form-control" type="hidden" id="search_cg3" value="Django" />
-                            <div class="input-group-append">
-                                <button class="btn btn-link" id="button-cg3" type="button">Django ({{ countcategory.2 }})</button>
-                            </div>
-                        </li>
+                        {% endfor %}     
                     </ul>
                 </div>
             </div>

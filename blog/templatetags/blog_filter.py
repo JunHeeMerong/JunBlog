@@ -12,3 +12,7 @@ def sub(value, arg):
 def mark(value):
     extensions = ["nl2br", "fenced_code","tables"]
     return mark_safe(markdown.markdown(value, extensions=extensions))
+
+@register.filter
+def getvalue(list,index):
+    return list[index]
