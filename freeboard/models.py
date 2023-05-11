@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.template.defaultfilters import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -9,7 +10,7 @@ class FreePost(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='free_author_question')  
-    content = models.TextField()
+    content = RichTextUploadingField(blank=True,null=True)
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
     click = models.IntegerField(null=True, default=0) # 클릭

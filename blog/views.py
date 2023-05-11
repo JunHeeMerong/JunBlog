@@ -71,7 +71,7 @@ def post_create(request):
     posts = countpost(request)
     comments = countcomment(request)
     #하나의 모델폼을 여러번 쓸수 있음. 모델,모델폼,몇개의 폼을 띄울건지 갯수
-    ImageFormSet = modelformset_factory(PostImage,form=ImageForm,extra=10)
+    ImageFormSet = modelformset_factory(PostImage,form=ImageForm,extra=3)
     if request.method=='POST':
         postform = PostForm(request.POST)
         # queryset을 none으로 정의해서 이미지가 없어도 되도록 설정. none은 빈 쿼리셋 리턴

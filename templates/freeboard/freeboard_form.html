@@ -28,10 +28,10 @@
                             value="{{ postform.title.value|default_if_none:'' }}">
                     </div>
                 </div>
+                {{ postform.media }}
                 <div class="mb-3">
                     <label for="content" class="form-label">내용</label>
-                    <textarea class="form-control" name="content"
-                            id="content" rows="10">{{ postform.content.value|default_if_none:'' }}</textarea>
+                    {{ postform.content }}
                 </div>
                 <div class="mb-3">
                     {{ formset.management_form }}

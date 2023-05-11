@@ -26,7 +26,7 @@
             <div class='card mb-4'>
                 <div class='card-body'>
                     <div class='card-text'>
-                        {{ post.content|mark }}
+                        {{ post.content|mark|safe }}
                         {% if post.freeimage %}
                         {% for i in post.freeimage.all %}
                         <img src='{{i.freeimage.url}}' class='mb-2 mt-2' style="width: 100%; height:auto;"/>
