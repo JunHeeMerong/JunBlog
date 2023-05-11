@@ -41,9 +41,7 @@
                 {{ postform.media }}
                 <div class="mb-3">
                     <label for="content" class="form-label">내용</label>
-                    {{ postform.content }}
-                    {% comment %} <textarea class="form-control" name="content"
-                            id="content" rows="10">{{ postform.content.value|default_if_none:'' }}</textarea> {% endcomment %}
+                    <div>{{ postform.content }}</div>
                 </div>
                 <div class="mb-3">
                     {{ formset.management_form }}
