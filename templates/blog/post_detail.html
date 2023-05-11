@@ -28,7 +28,7 @@
             <div class='card mb-4'>
                 <div class='card-body'>
                     <div class='card-text'>
-                        {{ post.content|mark }}
+                        {{ post.content|mark|safe }}
                         {% if post.image %}
                         {% for i in post.image.all %}
                         <img src='{{i.image.url}}' class='mb-2 mt-2' style="width: 100%; height:auto;"/>
