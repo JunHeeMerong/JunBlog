@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from blog.models import Post,Comment
 from freeboard.models import *
 from django.contrib.auth.models import User
+from .programmers import progarmmers
 import logging
 logger = logging.getLogger('junblog')
 
@@ -27,3 +28,13 @@ def home(request):
     comments = countcomment(request)
     context = {'posts':posts,'comments':comments}
     return render(request, 'main/main.html',context)
+
+def programmers(request):
+    if request.method == "POST":
+        id = request.POST['id']
+        pw = request.POST['pw']
+        score = progarmmers(id,pw)
+        context = {'score':score}
+    else:
+        context = {}
+    return render(request, 'main/programmers.html',context)
