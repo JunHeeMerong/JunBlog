@@ -1,14 +1,15 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 def progarmmers(id,pw):
     try:
         noopen = webdriver.ChromeOptions()
         noopen.add_argument("headless")
-        driver = webdriver.Chrome(options=noopen)
-
+        driver = webdriver.Chrome(ChromeDriverManager().install(),options=noopen)
+    
         url = 'https://programmers.co.kr/account/sign_in?referer=https://school.programmers.co.kr/learn/challenges?order=recent&page=1'
         driver.get(url)
         # driver.maximize_window() # 화면을 열고 풀스크린으로 적용
@@ -25,9 +26,6 @@ def progarmmers(id,pw):
         time.sleep(1)
 
         score = driver.find_element(by=By.XPATH, value='//*[@id="edu-service-app-main"]/div/div[2]/article/div[2]/aside/div[1]/div/ul/li[2]/div[2]')
-        # print('----------------')
-        # print('점수 : ',score.text)
         return score.text
     except:
-        # print('아이디/비밀번호가 잘못되었습니다.')
         return '아이디/비밀번호가 잘못되었습니다.'
