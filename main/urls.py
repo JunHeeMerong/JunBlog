@@ -28,6 +28,7 @@ urlpatterns = [
     path('freeboard/',include('freeboard.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('programmers/',view.programmers,name='programmers'),
+    path('chat/',include('chat.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 #urlpatterns+=re_path(r'^media/(?P<path>.\*)$', serve, {'document_root': settings.MEDIA_ROOT,})

@@ -66,19 +66,21 @@
             </form>
             <!-- 댓글들 -->
             <h5 class="border-bottom my-3 py-2">{{post.comment_set.count}}개의 댓글이 있습니다.</h5>
-            {% for comment in post.comment_set.all %}
-            <a id="comment_{{ comment.id }}"></a>
+            
             <div class="card my-3">
+            {% for comment in post.comment_set.all %}
+                {% comment %} <a id="comment_{{ comment.id }}"></a> {% endcomment %}
                 <div class="card-body">
                     <div class="card-text">{{ comment.content }}</div>
                     <div class="d-flex justify-content-end">
                         <div class="badge bg-light text-dark p-2 text-start mx-3">
-                            <div class="mb-2">{{ comment.author.username }}</div>
+                            <div class="mb-2">작성자 : {{ comment.author.username }}</div>
                             <div>{{ comment.create_date }}</div>
                             {% if comment.modify_date %}
                             <div>{{ comment.modify_date }}(수정됨)</div>
                             {% endif %}
                         </div>
+                    </div>
                     <div class="my-3">
                         {% if request.user == comment.author %}
                         <a href="{% url 'blog:comment_modify' comment.id  %}" 
@@ -88,8 +90,10 @@
                         {% endif %}
                     </div>
                 </div>
-            </div>
+            <hr/>
             {% endfor %}
+            </div>
+            
         </div>
     </div>
 </div>
