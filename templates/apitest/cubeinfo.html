@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='col-lg-10 my-5' style='float: none; margin:0 auto;'>
+    {% if cube_list %}
+    <p>{{ character_name }} 캐릭터가 있는 계정에 대한</p>
+    <p>"{{ startdate }}" ~ "{{ lastdate }}" 데이터가 있습니다.</p>
+    <p>갱신하시겠습니까?</p>
+    <form action="{% url 'apitest:update' %}" method='post'>
+        {% csrf_token %}
+        <input type='hidden' name='userkey' id='userkey'
+        value={{userkey}}>
+        <button type='submit' href='javascript:void(0)' class='update' 
+        data-uri="{% url 'apitest:update' %}">업데이트</button>
+    </form>
+    {% else %}
+    <p>큐브사용내역이 존재하지 않습니다</p>
+    <p>사용내역을 업데이트 해주세요<div class=""></div></p>
+    <form action="{% url 'apitest:update' %}" method='post'>
+        {% csrf_token %}
+        <input type='hidden' name='userkey' id='userkey'
+        value={{userkey}}>
+        <button type='submit' href='javascript:void(0)' class='update' 
+        data-uri="{% url 'apitest:update' %}">업데이트</button>
+    </form>
+    {% endif %}
+</div>
+<div class='col-lg-10 my-3' style='float: none; margin:0 auto;'>
+    <h2>전체데이터 보기</h2>
+    <h4>캐릭터</h4>
+    {% for c in character_list %}
+    <p>{{c}}</p>
+    {% endfor %}
+    <h4>큐브</h4>
+    {% for c in cube_list %}
+    <p>{{c}}</p>
+    {% endfor %}
+    <h4>날짜</h4>
+    <p>조회하기</p>
+</div>
+<div class='col-lg-10 row' style='float: none; margin:0 auto;'>
+    <div class='col-lg-9'>
+        {% for ch in cubehistory %}
+        <div class='card my-2'>
+            <div>
+                <p>닉네임 : {{ ch.character_name }} / 큐브 사용 날짜 : {{ ch.create_date }}</p>
+            </div>
+            <div class='row'>
+                <div class='col-lg-3 mx-1'>
+                    <p>아이템 : {{ ch.target_item }}</p>
+                    <p>큐브 : {{ ch.cube_type }} </p>
+                </div>
+                <div class='col-lg-4 mx-1'>
+                    <h1>Before</h1>
+                    <p class='{{ ch.before_options_grade1 }}'>옵션1 : {{ ch.before_options_value1 }}</p>
+                    <p class='{{ ch.before_options_grade2 }}'>옵션2 : {{ ch.before_options_value2 }}</p>
+                    {% if ch.before_options_value3 %}
+                    <p class='{{ ch.before_options_grade3 }}'>옵션3 : {{ ch.before_options_value3 }}</p>
+                    {% endif %}
+                </div>
+                <div class='col-lg-4 mx-1'>
+                    <h1>After</h1>
+                    <p class='{{ ch.after_options_grade1 }}'>옵션1 : {{ ch.after_options_value1 }}</p>
+                    <p class='{{ ch.after_options_grade2 }}'>옵션2 : {{ ch.after_options_value2 }}</p>
+                    {% if ch.after_options_value3 %}
+                    <p class='{{ ch.after_options_grade3 }}'>옵션3 : {{ ch.after_options_value3 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class='col-lg-3' style='float: none; margin:0 auto;'>
+        <h1>통계</h1>
+        <h3>사용량</h3>
+        <p>수상한 큐브  : {{ cc }}</p>
+        <p>장인의 큐브  : {{ jc }}</p>
+        <p>명장의 큐브  : {{ mc }}</p>
+        <p>레드 큐브  : {{ rc }}</p>
+        <p>블랙 큐브  : {{ bc }}</p>
+        <p>이벤트링 전용 명장의 큐브  : {{ emc }}</p>
+        <p>수상한 에디셔널 큐브  : {{ cac }}</p>
+        <p>에디셔널 큐브  : {{ ac }}</p>
+        <p>화이트 에디셔널 큐브  : {{ wac }}</p>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+    const update_elements = document.getElementsByClassName('update');
+    Array.from(update_elements).forEach(function(element) {
+        element.addEventListener('click',function() {
+            if(confirm('업데이트 하시겠습니까?')) {
+                location.href = this.dataset.uri
+            };
+        });
+    });
+</script>
+{% endblock %}

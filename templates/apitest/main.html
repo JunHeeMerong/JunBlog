@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <form method="post" action="{% url 'apitest:cubeinfo' %}" class='row'>
+        {% csrf_token %}
+        {% include  "apileftbox.html" %}
+        <div class='col-lg-9'>
+            {% include "form_errors.html" %}
+            <div class='my-5'></div>
+            <div class="my-3">
+                <label for="Key">API Key</label>
+                <input type="text" class="form-control" name="Key" id="Key"
+                    value="{{ form.username.value|default_if_none:'' }}">
+            </div>
+            <button type="submit" class="btn btn-primary">조회하기</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

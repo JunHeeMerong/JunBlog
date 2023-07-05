@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'freeboard.apps.FreeboardConfig',
     'chat.apps.ChatConfig',
+    'apitest.apps.ApitestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,7 +131,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

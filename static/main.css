@@ -10862,3 +10862,20 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.레어 {
+  color : skyblue;
+  font-size: 20px;
+}
+.에픽 {
+  color : purple;
+  font-size: 20px;
+}
+.유니크 {
+  color : #eca22a;
+  font-size: 20px;
+}
+.레전드리 {
+  color : green;
+  font-size: 20px;
+}

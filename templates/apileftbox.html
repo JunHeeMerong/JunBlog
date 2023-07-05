@@ -14,20 +14,10 @@
         </div>
         {% endif %}
     </div>
-    <!-- 프로그래머스 -->
-    {% if user.is_authenticated %}
-    {% if user.id == 1 %}
     <div class='card mb-5'>
-        <a class='card-body' href='/programmers'>프로그래머스</a>
+        <a class='card-body' href='/apitest/practice'>API TEST</a>
     </div>
     <div class='card mb-5'>
-        <a class='card-body' href='/chat'>채팅</a>
+        <a class='card-body' href='/apitest/mapleapi'>메이플API</a>
     </div>
-    <div class='card mb-5'>
-        <a class='card-body' href='/apitest'>API TEST</a>
-    </div>
-    {% endif %}
-    {% endif %}
-    <!-- Search widget-->
-    <!-- Categories widget-->
 </div>

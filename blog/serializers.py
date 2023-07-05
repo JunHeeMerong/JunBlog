@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import PostImage, Post
+from blog.models import PostImage, Post
 
 class PostImageSerializer(serializers.ModelSerializer):
 
@@ -21,14 +21,10 @@ class PostImageSerializer(serializers.ModelSerializer):
         return instance
 
 class PostSerializer(serializers.ModelSerializer):
-
     images = PostImageSerializer(many=True, read_only=True)
-
-
     class Meta:
         model = Post
         fields = ['id', 'title', 'content', 'create_date', 'images']
-        
         
     def create(self, validated_data):
         instance = Post.objects.create(**validated_data)

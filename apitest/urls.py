@@ -5,5 +5,9 @@ from . import views
 app_name = 'apitest'
 
 urlpatterns = [
-    path('', views.mapleapi,name='bloghome'),
+    path('practice/',views.apitest),
+    path('mapleapi/',views.mapleapitest),
+    path('', views.cubeapi),
+    path('cubeinfo/',views.cubeinfo,name='cubeinfo'),
+    path('update/',views.cubeupdate,name='update'),
 ]

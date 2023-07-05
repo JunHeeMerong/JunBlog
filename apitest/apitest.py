@@ -6,27 +6,18 @@ import json
 import pandas as pd
 from datetime import datetime, timedelta
 
-def maple_API(key):
+def maple_API(key,start_date,last_date):
     url = 'https://public.api.nexon.com/openapi/maplestory/v1/cube-use-results'
 
-    start_dates = "2022-11-25"
-    last_dates = "2023-07-02"
-    a = datetime.strptime(start_dates,"%Y-%m-%d")
-    print('a:',a)
-    print(type(a))
-    b = a.strftime("%Y-%m-%d")
-    print('b:',b)
-    print(type(b))
-
-    start_date = datetime.strptime("2023-07-01","%Y-%m-%d")
-    last_date = datetime.strptime(last_dates,"%Y-%m-%d")
+    start_date = datetime.strptime(start_date,"%Y-%m-%d")
+    last_date = datetime.strptime(last_date,"%Y-%m-%d")
 
     # 큐브기록 저장
     total_history = []
-    while start_date<= last_date:
+    while start_date <= last_date:
         dates = start_date.strftime("%Y-%m-%d")
         headers = {
-            'authorization' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJYLUFwcC1SYXRlLUxpbWl0IjoiNTAwOjEwIiwiYWNjb3VudF9pZCI6IjE3Nzg1MjM0NzMiLCJhdXRoX2lkIjoiMiIsImV4cCI6MTcwMzkwNjI2MSwiaWF0IjoxNjg4MzU0MjYxLCJuYmYiOjE2ODgzNTQyNjEsInNlcnZpY2VfaWQiOiI0MzAwMTEzOTciLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4ifQ.rOBbtpfB-Tv5xKIHb6uJ9I1YdMZVG6RMqwhl3ds_31s'
+            'authorization' : key
         }
         params = {
             'count' : 1000,
@@ -60,8 +51,5 @@ def maple_API(key):
     # after_additional_potential_options	object array(CubeResultOptionDTO)	큐브 사용 후 에디셔널 잠재능력 옵션
     # value                                 string                              옵션이름
     # grade                                 string                              옵션등급
-
-    tf = total_history[0]
-    print(tf['character_name'])
-
-maple_API("a")
+    
+    return total_history
