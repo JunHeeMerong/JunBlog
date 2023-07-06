@@ -137,6 +137,7 @@ def cubeinfo(request):
             else:
                 cube = maple_API(userkey,'2022-11-25',lastdate.strftime('%Y-%m-%d'))
                 cubesave(cube,userkey)
+            cubehistory = Cube.objects.filter(qcharacter & qcube).all().order_by('-create_date')
         elif 'filtering' in request.POST:
             charactor_check_list = request.POST.getlist('charactor_filter',None)
             cube_check_list = request.POST.getlist('cube_filter',None)
