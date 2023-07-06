@@ -147,6 +147,9 @@ def cubeinfo(request):
                 qcharacter |= Q(character_name = c)
             for c in cube_check_list:
                 qcube |= Q(cube_type = c)
+            if not qcharacter:
+                for c in Cube.objects.filter(key=userkey).distinct().values_list('character_name',flat=True):
+                    qcharacter |= Q(character_name = c)
             cubehistory = Cube.objects.filter(qcharacter & qcube).all().order_by('-create_date')
             if not cubehistory:
                 cubehistory = Cube.objects.filter(key=userkey).order_by('-create_date')
@@ -157,12 +160,11 @@ def cubeinfo(request):
         if cubehistory:
             lastcube = cubehistory[0]
             cubehistory2 = Cube.objects.filter(key=userkey).order_by('create_date')[0]
-            userkey = lastcube.key
             userchracter = lastcube.character_name
             startdate = cubehistory2.create_date
             lastdate = lastcube.create_date
             
-            charactorlist =  Cube.objects.filter(key=userkey).distinct().values_list('character_name',flat=True)
+            charactorlist = Cube.objects.filter(key=userkey).distinct().values_list('character_name',flat=True)
             cubelist =  Cube.objects.filter(key=userkey).distinct().values_list('cube_type',flat=True)
             cc = cubehistory.filter(cube_type='수상한 큐브').all().count()
             jc = cubehistory.filter(cube_type='장인의 큐브').all().count()
@@ -199,7 +201,6 @@ def cubeinfo(request):
             cubehistory = Cube.objects.filter(key=userkey).order_by('-create_date')
             lastcube = cubehistory[0]
             cubehistory2 = Cube.objects.filter(key=userkey).order_by('create_date')[0]
-            userkey = lastcube.key
             userchracter = lastcube.character_name
             startdate = cubehistory2.create_date
             lastdate = lastcube.create_date
