@@ -48,29 +48,3 @@ class Cube(models.Model):
 
     class Meta:
         db_table = 'Cube'
-    
-class Addcube(models.Model):
-    idx = models.AutoField(primary_key=True)
-    key = models.TextField(null=False,blank=False) # API Key
-    character_name = models.CharField(max_length=12) # 캐릭닉넴
-    create_date = models.DateTimeField() # 사용한 날짜
-    cube_type = models.CharField(max_length=12) # 큐브 종류
-    item_upgrade_result = models.CharField(max_length=12) # 등업결과
-    item_level = models.IntegerField() # 아이템 레벨
-    target_item = models.CharField(max_length=20) # 아이템 이름
-    additional_potential_option_grade = models.CharField(max_length=4) # 에디등급
-    before_options_value1 = models.CharField(max_length=30)
-    before_options_grade1 = models.CharField(max_length=4)
-    before_options_value2 = models.CharField(max_length=30)
-    before_options_grade2 = models.CharField(max_length=4)
-    before_options_value3 = models.CharField(max_length=30)
-    before_options_grade3 = models.CharField(max_length=4)
-    after_options_value1 = models.CharField(max_length=30)
-    after_options_grade1 = models.CharField(max_length=4)
-    after_options_value2 = models.CharField(max_length=30)
-    after_options_grade2 = models.CharField(max_length=4)
-    after_options_value3 = models.CharField(max_length=30)
-    after_options_grade3 = models.CharField(max_length=4)
-
-    class Meta:
-        db_table = 'Addcube'

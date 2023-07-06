@@ -9,5 +9,4 @@ urlpatterns = [
     path('mapleapi/',views.mapleapitest),
     path('', views.cubeapi),
     path('cubeinfo/',views.cubeinfo,name='cubeinfo'),
-    path('update/',views.cubeupdate,name='update'),
 ]

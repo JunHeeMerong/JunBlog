@@ -5,38 +5,54 @@
     <p>{{ character_name }} 캐릭터가 있는 계정에 대한</p>
     <p>"{{ startdate }}" ~ "{{ lastdate }}" 데이터가 있습니다.</p>
     <p>갱신하시겠습니까?</p>
-    <form action="{% url 'apitest:update' %}" method='post'>
+    <form action="{% url 'apitest:cubeinfo' %}" method='post'>
         {% csrf_token %}
-        <input type='hidden' name='userkey' id='userkey'
+        <input type='hidden' name='Key' id='Key'
         value={{userkey}}>
-        <button type='submit' href='javascript:void(0)' class='update' 
-        data-uri="{% url 'apitest:update' %}">업데이트</button>
+        <button type='submit' name='update' href='javascript:void(0)' class='update' 
+        data-uri="{% url 'apitest:cubeinfo' %}">갱신</button>
     </form>
     {% else %}
     <p>큐브사용내역이 존재하지 않습니다</p>
-    <p>사용내역을 업데이트 해주세요<div class=""></div></p>
-    <form action="{% url 'apitest:update' %}" method='post'>
+    <p>사용내역을 업데이트 해주세요</p>
+    <p>갱신해도 큐브사용내역이 없을 경우 실제 큐브 사용내역이 없거나 문의주세요</p>
+    <form action="{% url 'apitest:cubeinfo' %}" method='post'>
         {% csrf_token %}
-        <input type='hidden' name='userkey' id='userkey'
+        <input type='hidden' name='Key' id='Key'
         value={{userkey}}>
-        <button type='submit' href='javascript:void(0)' class='update' 
-        data-uri="{% url 'apitest:update' %}">업데이트</button>
+        <button type='submit' name='update' href='javascript:void(0)' class='update' 
+        data-uri="{% url 'apitest:cubeinfo' %}">업데이트</button>
     </form>
     {% endif %}
 </div>
-<div class='col-lg-10 my-3' style='float: none; margin:0 auto;'>
-    <h2>전체데이터 보기</h2>
-    <h4>캐릭터</h4>
-    {% for c in character_list %}
-    <p>{{c}}</p>
-    {% endfor %}
-    <h4>큐브</h4>
-    {% for c in cube_list %}
-    <p>{{c}}</p>
-    {% endfor %}
-    <h4>날짜</h4>
-    <p>조회하기</p>
+<div class='col-lg-10 my-3 card' style='float: none; margin:0 auto;'>
+    <h4>캐릭터, 큐브 전부 체크 해제하고 조회하면 전체 조회됩니다.</h4>
+    <form action="{% url 'apitest:cubeinfo' %}" method='post'>
+        {% csrf_token %}
+        <input type='hidden' name='Key' id='Key'
+        value={{userkey}}>
+        <h3>캐릭터</h3>
+        <div class='row my-2'>
+        {% for c in character_list %}
+            <div class='col-lg-2'>
+                <p>{{c}}</p>
+                <input type="checkbox" name='charactor_filter' value='{{c}}'>
+            </div>
+        {% endfor %}
+        </div>
+        <h3>큐브</h3>
+        <div class='row my-2'>
+        {% for c in cube_list %}
+            <div class='col-lg-2'>
+                <p>{{c}}</p>
+                <input type="checkbox" name='cube_filter' value='{{c}}'>
+            </div>
+        {% endfor %}
+        </div>
+        <button type='submit' name='filtering'>조회</button>
+    </form>
 </div>
+{% if comment == '' %}
 <div class='col-lg-10 row' style='float: none; margin:0 auto;'>
     <div class='col-lg-9'>
         {% for ch in cubehistory %}
@@ -83,6 +99,11 @@
         <p>화이트 에디셔널 큐브  : {{ wac }}</p>
     </div>
 </div>
+{% else %}
+<div class='col-lg-10' style='float: none; margin:0 auto;'>
+    <h2>{{comment}}</h2>
+</div>
+{% endif %}
 {% endblock %}
 {% block script %}
 <script type='text/javascript'>
